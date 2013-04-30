@@ -1,7 +1,7 @@
 {
   "name": "generator-microlib",
-  "version": "0.0.0",
-  "description": "A generator for Yeoman",
+  "version": "0.1.0",
+  "description": "A Yeoman generator for browser microlibs",
   "keywords": [
     "yeoman-generator"
   ],
