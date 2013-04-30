@@ -1,7 +1,14 @@
 # Generator microlib
-[![Build Status](https://secure.travis-ci.org/asbjornenge/generator-microlib.png?branch=master)](https://travis-ci.org/asbjornenge/generator-microlib)
 
-A generator for Yeoman.
+A Yeoman generator for browser microlibs.  
+
+It includes:
+
+* README.md
+* Grunfile
+* bower.json
+* package.json
+* test scaffolding (optional)
 
 ## Getting started
 - Make sure you have [yo](https://github.com/yeoman/yo) installed:

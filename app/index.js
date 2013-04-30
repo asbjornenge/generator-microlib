@@ -22,7 +22,7 @@ MicrolibGenerator.prototype.askFor = function askFor() {
   // welcome message
   var welcome =
   '\n     _-----_' +
-  '\n    |       |' +
+  '\n    | Micro |' +
   '\n    |' + '--(o)--'.red + '|   .--------------------------.' +
   '\n   `---------´  |    ' + 'Welcome to Yeoman,'.yellow.bold + '    |' +
   '\n    ' + '( '.yellow + '_' + '´U`'.yellow + '_' + ' )'.yellow + '   |   ' + 'ladies and gentlemen!'.yellow.bold + '  |' +
@@ -34,10 +34,10 @@ MicrolibGenerator.prototype.askFor = function askFor() {
   console.log(welcome);
 
   var prompts = [{
-    name: 'someOption',
-    message: 'Would you like to enable this option?',
+    name: 'includeTests',
+    message: 'Would you like to include some test scaffolding?',
     default: 'Y/n',
-    warning: 'Yes: Enabling this will be totally awesome!'
+    warning: 'Yes: You know you should!'
   }];
 
   this.prompt(prompts, function (err, props) {
@@ -45,18 +45,25 @@ MicrolibGenerator.prototype.askFor = function askFor() {
       return this.emit('error', err);
     }
 
-    this.someOption = (/y/i).test(props.someOption);
+    this.includeTests = (/y/i).test(props.includeTests);
 
     cb();
   }.bind(this));
 };
 
 MicrolibGenerator.prototype.app = function app() {
-  this.mkdir('app');
-  this.mkdir('app/templates');
+  this.mkdir('lib');
+  this.mkdir('dist');
 
+  this.copy('_README.md', 'README.md');
+  this.copy('_Gruntfile.js', 'Gruntfile.js');
   this.copy('_package.json', 'package.json');
-  this.copy('_component.json', 'component.json');
+  this.copy('_bower.json', 'bower.json');
+  if (this.includeTests) {
+    this.mkdir('test');
+    this.copy('_qunit.html','test/test.html');
+    this.copy('_qunit.js','test/test.js');
+  }
 };
 
 MicrolibGenerator.prototype.projectfiles = function projectfiles() {
