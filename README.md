@@ -29,7 +29,7 @@ The generator provides the following files.
 	       | - test.html // QUnit test markup
 	       | - test.js   // QUnit tests
 	 
-The generator provides the following grunt files.
+The generator provides the following grunt tasks.
 
 	$ grunt jshint qunit concat uglify
 	$ grunt // will run them all
