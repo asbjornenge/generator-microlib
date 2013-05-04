@@ -23,13 +23,19 @@ describe('microlib generator', function () {
     var expected = [
       // add files you expect to exist here.
       '.jshintrc',
-      '.editorconfig'
+      '.editorconfig',
+      '.gitignore',
+      'bower.json',
+      'package.json',
+      'Gruntfile.js',
+      'README.md',
+      'lib/yeoball.js'
     ];
 
     helpers.mockPrompt(this.app, {
-      'someOption': 'Y'
+      'includeTests': 'Y'
     });
-
+    // this.app.options['skip-install'] = true;
     this.app.run({}, function () {
       helpers.assertFiles(expected);
       done();

@@ -18,7 +18,7 @@ module.exports = function(grunt) {
       },
       dist: {
         src: ['js/*.js'],
-        dest: 'dist/<%= pkg.name %>_v<%= pkg.version %>.js'
+        dest: 'dist/<%= pkg.name %>.v<%= pkg.version %>.js'
       }
     },
     uglify: {
@@ -27,7 +27,7 @@ module.exports = function(grunt) {
       },
       dist: {
         src: '<%= concat.dist.dest %>',
-        dest: 'dist/<%= pkg.name %>_v<%= pkg.version %>.min.js'
+        dest: 'dist/<%= pkg.name %>.v<%= pkg.version %>.min.js'
       }
     },
     jshint: {
@@ -50,9 +50,6 @@ module.exports = function(grunt) {
       },
       gruntfile: {
         src: 'Gruntfile.js'
-      },
-      lib_test: {
-        src: ['lib/**/*.js', 'test/**/*.js']
       }
     },
     qunit: {
@@ -62,10 +59,6 @@ module.exports = function(grunt) {
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
         tasks: ['jshint:gruntfile']
-      },
-      lib_test: {
-        files: '<%= jshint.lib_test.src %>',
-        tasks: ['jshint:lib_test', 'qunit']
       }
     }
   });

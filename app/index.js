@@ -22,8 +22,8 @@ MicrolibGenerator.prototype.askFor = function askFor() {
   // welcome message
   var welcome =
   '\n     _-----_' +
-  '\n    | Micro |' +
-  '\n    |' + '--(o)--'.red + '|   .--------------------------.' +
+  '\n    |       |' +
+  '\n    |' + '--(µ)--'.red + '|   .--------------------------.' +
   '\n   `---------´  |    ' + 'Welcome to Yeoman,'.yellow.bold + '    |' +
   '\n    ' + '( '.yellow + '_' + '´U`'.yellow + '_' + ' )'.yellow + '   |   ' + 'ladies and gentlemen!'.yellow.bold + '  |' +
   '\n    /___A___\\   \'__________________________\'' +
@@ -59,6 +59,7 @@ MicrolibGenerator.prototype.app = function app() {
   this.copy('_Gruntfile.js', 'Gruntfile.js');
   this.copy('_package.json', 'package.json');
   this.copy('_bower.json', 'bower.json');
+  this.copy('_library.js', 'lib/yeoball.js');
   if (this.includeTests) {
     this.mkdir('test');
     this.copy('_qunit.html','test/test.html');
