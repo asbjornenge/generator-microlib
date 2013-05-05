@@ -50,6 +50,9 @@ module.exports = function(grunt) {
       },
       gruntfile: {
         src: 'Gruntfile.js'
+      },
+      lib_test: {
+        src: ['lib/**/*.js', 'test/**/*.js']
       }
     },
     qunit: {
@@ -59,6 +62,10 @@ module.exports = function(grunt) {
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
         tasks: ['jshint:gruntfile']
+      },
+      lib_test: {
+        files: '<%= jshint.lib_test.src %>',
+        tasks: ['jshint:lib_test', 'qunit']
       }
     }
   });

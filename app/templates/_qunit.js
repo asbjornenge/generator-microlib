@@ -1,4 +1,4 @@
-/*global test, ok */
+/*global yeoball:false, test:false, ok:false */
 
 (function () {
   'use strict';
