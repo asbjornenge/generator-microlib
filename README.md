@@ -1,5 +1,7 @@
 # Generator microlib
 
+[![Build Status](https://secure.travis-ci.org/asbjornenge/generator-microlib.png?branch=master)](http://travis-ci.org/asbjornenge/generator-microlib)
+
 A Yeoman generator for browser microlibs.  
 
 A microlib or micro-library is a javascript component that has a specific usecase and often a limited set of features. Great microlibraries have no dependecies and don't get in each others way.
