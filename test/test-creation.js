@@ -35,7 +35,7 @@ describe('microlib generator', function () {
     helpers.mockPrompt(this.app, {
       'includeTests': 'Y'
     });
-    // this.app.options['skip-install'] = true;
+    this.app.options['skip-install'] = true;
     this.app.run({}, function () {
       helpers.assertFiles(expected);
       done();
