@@ -1,4 +1,6 @@
-/*jshint "unused":false */
+/* Oldschool browser library */
+/* global yolo */
+/* jshint unused: false */
 
 function <%= libname %>(complicated_question) {
 	'use strict';

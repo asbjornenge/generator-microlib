@@ -71,37 +71,57 @@ MicrolibGenerator.prototype.app = function app() {
   this.mkdir('lib');
   this.mkdir('dist');
 
-  this.devDepsNpm = ''+
+  this.gruntTestsConfig  = "";
+  this.gruntTestTasks    = "";
+  this.gruntTestTaskName = "";
+  this.devDepsBower      = "";
+  this.devDepsNpm       =
     '"grunt": "~0.4.1",'+
-    '\n    "grunt-contrib-jshint": "~0.1.1",'+
-    '\n    "grunt-contrib-nodeunit": "~0.1.2",'+
-    '\n    "grunt-contrib-uglify": "~0.2.0",'+
-    '\n    "grunt-contrib-concat": "~0.3.0",'+
-    '\n    "grunt-contrib-watch": "~0.3.1"';
-  this.devDepsBower = ''
+    '\n    "grunt-contrib-jshint" : "~0.6.0",'+
+    '\n    "grunt-contrib-uglify" : "~0.2.2",'+
+    '\n    "grunt-contrib-concat" : "~0.3.0",'+
+    '\n    "grunt-contrib-watch"  : "~0.4.4"';
 
   switch(this.includeTests) {
     case 'intern':
       this.mkdir('tests');
       this.template('intern.js',      'tests/intern.js');
       this.template('intern_test.js', 'tests/test.js');
+      this.template('library_amd.js', 'lib/'+this.libname+'_amd.js');
       this.devDepsNpm  +=
-        ',\n    "intern": "~1.1.0"';
+        ',\n    "intern" : "~1.1.0"';
+      this.gruntTestsConfig =
+        "intern: {"+
+        "\n      library: {"+
+        "\n        options: {"+
+        "\n          // for other available options, see:"+
+        "\n          // https://github.com/theintern/intern/wiki/Using-Intern-with-Grunt#task-options"+
+        "\n          config: 'tests/intern'"+
+        "\n        }"+
+        "\n      }"+
+        "\n    },"
+      this.gruntTestTasks = "grunt.loadNpmTasks('intern');";
+      this.gruntTestTaskName = "intern";
       break;
     case 'qunit':
       this.mkdir('tests');
       this.template('qunit.html',    'tests/test.html');
       this.template('qunit_test.js', 'tests/test.js');
-      this.devDepsNpm  =
-        ',\n    "grunt-contrib-qunit": "~0.2.1"';
+      this.devDepsNpm  +=
+        ',\n    "grunt-contrib-qunit"    : "~0.2.2"';
       this.devDepsBower =
         '"qunit": "~1.11.0"'
+      this.gruntTestsConfig =
+        "qunit: {"+
+          "files: ['test/**/*.html']"+
+        "},";
+      this.gruntTestTasks = "grunt.loadNpmTasks('grunt-contrib-qunit');";
+      this.gruntTestTaskName = "qunit";
       break;
   }
 
   this.copy('LICENSE.md',    'LICENSE.md');
-  this.copy('Gruntfile.js',  'Gruntfile.js');
-
+  this.template('Gruntfile.js',  'Gruntfile.js');
   this.template('README.md',    'README.md');
   this.template('library.js',   'lib/'+this.libname+'.js');
   this.template('package.json', 'package.json');
