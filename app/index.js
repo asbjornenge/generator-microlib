@@ -80,10 +80,25 @@ MicrolibGenerator.prototype.app = function app() {
     '\n    "grunt-contrib-jshint" : "~0.6.0",'+
     '\n    "grunt-contrib-uglify" : "~0.2.2",'+
     '\n    "grunt-contrib-concat" : "~0.3.0",'+
-    '\n    "grunt-contrib-watch"  : "~0.4.4"';
+    '\n    "grunt-contrib-watch"  : "~0.4.4",'+
+    '\n    "matchdep"             : "~0.1.2"';
 
   switch(this.includeTests) {
-    case 'intern':
+    case 'qunit':
+      this.mkdir('tests');
+      this.template('qunit.html',    'tests/test.html');
+      this.template('qunit_test.js', 'tests/test.js');
+      this.devDepsNpm  +=
+        ',\n    "grunt-contrib-qunit"    : "~0.2.2"';
+      this.devDepsBower =
+        '"qunit": "~1.11.0"'
+      this.gruntTestsConfig =
+        "qunit: {"+
+        "\n        files: ['tests/test.html']"+
+        "\n    },";
+      this.gruntTestTaskName = "qunit";
+      break;
+    default:
       this.mkdir('tests');
       this.template('intern.js',      'tests/intern.js');
       this.template('intern_test.js', 'tests/test.js');
@@ -103,33 +118,17 @@ MicrolibGenerator.prototype.app = function app() {
       this.gruntTestTasks = "grunt.loadNpmTasks('intern');";
       this.gruntTestTaskName = "intern";
       break;
-    case 'qunit':
-      this.mkdir('tests');
-      this.template('qunit.html',    'tests/test.html');
-      this.template('qunit_test.js', 'tests/test.js');
-      this.devDepsNpm  +=
-        ',\n    "grunt-contrib-qunit"    : "~0.2.2"';
-      this.devDepsBower =
-        '"qunit": "~1.11.0"'
-      this.gruntTestsConfig =
-        "qunit: {"+
-          "files: ['test/**/*.html']"+
-        "},";
-      this.gruntTestTasks = "grunt.loadNpmTasks('grunt-contrib-qunit');";
-      this.gruntTestTaskName = "qunit";
-      break;
   }
 
-  this.copy('LICENSE.md',    'LICENSE.md');
   this.template('Gruntfile.js',  'Gruntfile.js');
-  this.template('README.md',    'README.md');
-  this.template('library.js',   'lib/'+this.libname+'.js');
-  this.template('package.json', 'package.json');
-  this.template('bower.json',   'bower.json');
+  this.template('README.md',     'README.md');
+  this.template('library.js',    'lib/'+this.libname+'.js');
+  this.template('package.json',  'package.json');
+  this.template('bower.json',    'bower.json');
 };
 
 MicrolibGenerator.prototype.projectfiles = function projectfiles() {
   this.copy('editorconfig', '.editorconfig');
-  this.copy('jshintrc', '.jshintrc');
-  this.copy('gitignore', '.gitignore');
+  this.copy('jshintrc',     '.jshintrc');
+  this.copy('gitignore',    '.gitignore');
 };
