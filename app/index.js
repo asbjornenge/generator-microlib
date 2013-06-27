@@ -71,12 +71,6 @@ MicrolibGenerator.prototype.app = function app() {
   this.mkdir('lib');
   this.mkdir('dist');
 
-  this.template('README.md', 'README.md');
-
-  this.copy('LICENSE.md',    'LICENSE.md');
-  this.copy('Gruntfile.js',  'Gruntfile.js');
-  this.copy('library.js',    'lib/'+this.libname+'.js');
-
   this.devDepsNpm = ''+
     '"grunt": "~0.4.1",'+
     '\n    "grunt-contrib-jshint": "~0.1.1",'+
@@ -89,15 +83,15 @@ MicrolibGenerator.prototype.app = function app() {
   switch(this.includeTests) {
     case 'intern':
       this.mkdir('tests');
-      this.copy('intern.js','tests/intern.js');
-      this.copy('intern_all.js','tests/all.js');
+      this.template('intern.js',      'tests/intern.js');
+      this.template('intern_test.js', 'tests/test.js');
       this.devDepsNpm  +=
         ',\n    "intern": "~1.1.0"';
       break;
     case 'qunit':
       this.mkdir('tests');
-      this.copy('qunit.html', 'tests/test.html');
-      this.copy('qunit.js',   'tests/test.js');
+      this.template('qunit.html',    'tests/test.html');
+      this.template('qunit_test.js', 'tests/test.js');
       this.devDepsNpm  =
         ',\n    "grunt-contrib-qunit": "~0.2.1"';
       this.devDepsBower =
@@ -105,6 +99,11 @@ MicrolibGenerator.prototype.app = function app() {
       break;
   }
 
+  this.copy('LICENSE.md',    'LICENSE.md');
+  this.copy('Gruntfile.js',  'Gruntfile.js');
+
+  this.template('README.md',    'README.md');
+  this.template('library.js',   'lib/'+this.libname+'.js');
   this.template('package.json', 'package.json');
   this.template('bower.json',   'bower.json');
 };
