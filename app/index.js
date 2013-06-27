@@ -76,14 +76,23 @@ MicrolibGenerator.prototype.app = function app() {
   this.copy('_Gruntfile.js', 'Gruntfile.js');
   this.copy('_library.js',   'lib/'+this.libname+'.js');
 
+  this.devDepsNpm = ''+
+    '"grunt": "~0.4.1",'+
+    '\n    "grunt-contrib-jshint": "~0.1.1",'+
+    '\n    "grunt-contrib-nodeunit": "~0.1.2",'+
+    '\n    "grunt-contrib-uglify": "~0.2.0",'+
+    '\n    "grunt-contrib-concat": "~0.3.0",'+
+    '\n    "grunt-contrib-watch": "~0.3.1"';
+  this.devDepsBower = ''
+
   switch(this.includeTests) {
     case 'intern':
       this.mkdir('tests');
       this.copy('intern.js','tests/intern.js');
       this.copy('intern_all.js','tests/all.js');
-      this.devDepsNpm  =
-        '"grunt-contrib-qunit": "~0.2.1"'
-      this.devDepsBower =
+      this.devDepsNpm  +=
+        ',\n    "grunt-contrib-qunit": "~0.2.1"'
+      this.devDepsBower +=
         '"qunit": "~1.11.0"'
       break;
     case 'qunit':
@@ -91,7 +100,7 @@ MicrolibGenerator.prototype.app = function app() {
       this.copy('_qunit.html', 'tests/test.html');
       this.copy('_qunit.js',   'tests/test.js');
       this.devDepsNpm  =
-        '"grunt-contrib-qunit": "~0.2.1"'
+        ',\n    "grunt-contrib-qunit": "~0.2.1"'
       this.devDepsBower =
         '"qunit": "~1.11.0"'
       break;
