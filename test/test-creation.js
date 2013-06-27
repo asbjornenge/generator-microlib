@@ -28,7 +28,6 @@ describe('microlib generator', function () {
       'package.json',
       'Gruntfile.js',
       'README.md',
-      'LICENSE.md',
       'lib/yolo.js'
     ];
 
