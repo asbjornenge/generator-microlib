@@ -60,7 +60,7 @@ MicrolibGenerator.prototype.askFor = function askFor() {
       return this.emit('error', err);
     }
 
-    this.libname      = props.libname;//(/^\S*$/i).test(props.libname);
+    this.libname      = props.libname.replace(/\s+/g, '');
     this.includeTests = props.includeTests;
 
     cb();
