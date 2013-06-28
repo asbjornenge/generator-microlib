@@ -71,6 +71,10 @@ MicrolibGenerator.prototype.app = function app() {
   this.mkdir('lib');
   this.mkdir('dist');
 
+  this.username = "username";
+  if (process.env != undefined && process.env['USER'] != undefined)
+    this.username = process.env['USER'];
+
   this.gruntTestsConfig  = "";
   this.gruntTestTasks    = "";
   this.gruntTestTaskName = "";
@@ -131,4 +135,5 @@ MicrolibGenerator.prototype.projectfiles = function projectfiles() {
   this.copy('editorconfig', '.editorconfig');
   this.copy('jshintrc',     '.jshintrc');
   this.copy('gitignore',    '.gitignore');
+  this.copy('travis.yml',   '.travis.yml');
 };

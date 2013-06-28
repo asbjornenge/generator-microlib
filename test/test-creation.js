@@ -24,6 +24,7 @@ describe('microlib generator', function () {
       '.jshintrc',
       '.editorconfig',
       '.gitignore',
+      '.travis.yml',
       'bower.json',
       'package.json',
       'Gruntfile.js',
