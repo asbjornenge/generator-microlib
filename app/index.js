@@ -23,29 +23,45 @@ MicrolibGenerator.prototype.askFor = function askFor() {
   var welcome =
   '\n     _-----_' +
   '\n    |       |' +
-  '\n    |' + '--(µ)--'.red + '|   .--------------------------.' +
-  '\n   `---------´  |    ' + 'Welcome to Yeoman,'.yellow.bold + '    |' +
-  '\n    ' + '( '.yellow + '_' + '´U`'.yellow + '_' + ' )'.yellow + '   |   ' + 'ladies and gentlemen!'.yellow.bold + '  |' +
-  '\n    /___A___\\   \'__________________________\'' +
+  '\n    |' + '--(µ)--'.red + '|   .---------------------------------------------.' +
+  '\n   `---------´  |    ' + 'Welcome to Yeoman ladies and gentlemen,'.yellow.bold+'  |' +
+  '\n    ' + '( '.yellow + '_' + '´U`'.yellow + '_' + ' )'.yellow + '   |   ' + 'lets make a library! Ooh, that tickles. '.yellow.bold + '  |' +
+  '\n    /___A___\\   \'_____________________________________________\'' +
   '\n     |  ~  |'.yellow +
   '\n   __' + '\'.___.\''.yellow + '__' +
   '\n ´   ' + '`  |'.red + '° ' + '´ Y'.red + ' `\n';
 
+  // dirname
+  var splitPath = process.cwd().split('/');
+  var dirname   = splitPath[splitPath.length-1];
+
   console.log(welcome);
 
-  var prompts = [{
-    name: 'includeTests',
-    message: 'Would you like to include some test scaffolding?',
-    default: 'Y/n',
-    warning: 'Yes: You know you should!'
-  }];
+  var prompts = [
+    {
+      name : 'libname',
+      message : 'What is the name of your library?'.bold.green,
+      default : dirname,
+      warning : 'a warning'
+    },
+    {
+      name: 'includeTests',
+      message: 'What is your flavor in testing tools?'.bold.green+
+               '\nQUnit      :'+' qunit'.bold.yellow +
+               '\nThe Intern :'+' intern'.bold.yellow +
+               '\n[MORE COMING]' +
+               '\n......................',
+      default : 'intern'
+    }
+  ];
 
   this.prompt(prompts, function (err, props) {
     if (err) {
       return this.emit('error', err);
     }
 
-    this.includeTests = (/y/i).test(props.includeTests);
+    this.libname      = props.libname.replace(/\s+/g, '');
+    this.includeTests = props.includeTests;
 
     cb();
   }.bind(this));
@@ -55,20 +71,69 @@ MicrolibGenerator.prototype.app = function app() {
   this.mkdir('lib');
   this.mkdir('dist');
 
-  this.copy('_README.md', 'README.md');
-  this.copy('_Gruntfile.js', 'Gruntfile.js');
-  this.copy('_package.json', 'package.json');
-  this.copy('_bower.json', 'bower.json');
-  this.copy('_library.js', 'lib/yeoball.js');
-  if (this.includeTests) {
-    this.mkdir('test');
-    this.copy('_qunit.html','test/test.html');
-    this.copy('_qunit.js','test/test.js');
+  this.username = "username";
+  if (process.env != undefined && process.env['USER'] != undefined)
+    this.username = process.env['USER'];
+
+  this.gruntTestsConfig  = "";
+  this.gruntTestTasks    = "";
+  this.gruntTestTaskName = "";
+  this.devDepsBower      = "";
+  this.devDepsNpm       =
+    '"grunt": "~0.4.1",'+
+    '\n    "grunt-contrib-jshint" : "~0.6.0",'+
+    '\n    "grunt-contrib-uglify" : "~0.2.2",'+
+    '\n    "grunt-contrib-concat" : "~0.3.0",'+
+    '\n    "grunt-contrib-watch"  : "~0.4.4",'+
+    '\n    "matchdep"             : "~0.1.2"';
+
+  switch(this.includeTests) {
+    case 'qunit':
+      this.mkdir('tests');
+      this.template('qunit.html',    'tests/test.html');
+      this.template('qunit_test.js', 'tests/test.js');
+      this.devDepsNpm  +=
+        ',\n    "grunt-contrib-qunit"    : "~0.2.2"';
+      this.devDepsBower =
+        '"qunit": "~1.11.0"'
+      this.gruntTestsConfig =
+        "qunit: {"+
+        "\n        files: ['tests/test.html']"+
+        "\n    },";
+      this.gruntTestTaskName = "qunit";
+      break;
+    default:
+      this.mkdir('tests');
+      this.template('intern.js',      'tests/intern.js');
+      this.template('intern_test.js', 'tests/test.js');
+      this.template('library_amd.js', 'lib/'+this.libname+'_amd.js');
+      this.devDepsNpm  +=
+        ',\n    "intern" : "~1.1.0"';
+      this.gruntTestsConfig =
+        "intern: {"+
+        "\n      library: {"+
+        "\n        options: {"+
+        "\n          // for other available options, see:"+
+        "\n          // https://github.com/theintern/intern/wiki/Using-Intern-with-Grunt#task-options"+
+        "\n          config: 'tests/intern'"+
+        "\n        }"+
+        "\n      }"+
+        "\n    },"
+      this.gruntTestTasks = "grunt.loadNpmTasks('intern');";
+      this.gruntTestTaskName = "intern";
+      break;
   }
+
+  this.template('Gruntfile.js',  'Gruntfile.js');
+  this.template('README.md',     'README.md');
+  this.template('library.js',    'lib/'+this.libname+'.js');
+  this.template('package.json',  'package.json');
+  this.template('bower.json',    'bower.json');
 };
 
 MicrolibGenerator.prototype.projectfiles = function projectfiles() {
   this.copy('editorconfig', '.editorconfig');
-  this.copy('jshintrc', '.jshintrc');
-  this.copy('gitignore', '.gitignore');
+  this.copy('jshintrc',     '.jshintrc');
+  this.copy('gitignore',    '.gitignore');
+  this.copy('travis.yml',   '.travis.yml');
 };

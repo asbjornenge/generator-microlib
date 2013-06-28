@@ -21,19 +21,20 @@ describe('microlib generator', function () {
 
   it('creates expected files', function (done) {
     var expected = [
-      // add files you expect to exist here.
       '.jshintrc',
       '.editorconfig',
       '.gitignore',
+      '.travis.yml',
       'bower.json',
       'package.json',
       'Gruntfile.js',
       'README.md',
-      'lib/yeoball.js'
+      'lib/yolo.js'
     ];
 
     helpers.mockPrompt(this.app, {
-      'includeTests': 'Y'
+      'libname'     : 'yolo',
+      'includeTests': 'intern'
     });
     this.app.options['skip-install'] = true;
     this.app.run({}, function () {

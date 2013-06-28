@@ -3,7 +3,7 @@
   "version": "0.1.3",
   "description": "A Yeoman generator for browser microlibs",
   "keywords": [
-    "yeoman-generator"
+    "yeoman-generator", "browser", "component", "dom", "generator", "javascript", "web", "buildtool"
   ],
   "homepage": "https://github.com/asbjornenge/generator-microlib",
   "bugs": "https://github.com/asbjornenge/generator-microlib/issues",
