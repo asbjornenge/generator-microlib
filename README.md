@@ -26,6 +26,7 @@ The generator provides the following files.
 	   |- bower.json     // Basic Bower configuration
 	   |- package.json   // Basic Npm configuration
 	   |- dist           // Folder for your distributables
+          |- <lib>.min.js
 	   |- lib            // Folder for your library !!
           |- <lib>.js
 	   |- tests          // Folder for your tests
@@ -56,6 +57,12 @@ enjoy.
 [MIT License](http://en.wikipedia.org/wiki/MIT_License)
 
 ## Changelog
+
+### 0.1.6
+
+* Updated yeoman-generator dependency to leverage [Inquirer](https://github.com/SBoudrias/Inquirer.js) for list prompts
+	* (Two updates in one day? Weee…!)
+	* (Note to self: Read up on semver :-P)
 
 ### 0.1.5
 

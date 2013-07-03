@@ -46,25 +46,24 @@ MicrolibGenerator.prototype.askFor = function askFor() {
     },
     {
       name: 'includeTests',
-      message: 'What is your flavor in testing tools?'.bold.green+
-               '\nQUnit      :'+' qunit'.bold.yellow +
-               '\nThe Intern :'+' intern'.bold.yellow +
-               '\n[MORE COMING]' +
-               '\n......................',
+      message: 'What is your flavor in testing tools?'.bold.green,
+      type : 'list',
+      choices : [
+        { name : 'QUnit',      value : 'qunit' },
+        { name : 'The Intern', value : 'intern' }
+      ],
       default : 'intern'
     }
   ];
 
-  this.prompt(prompts, function (err, props) {
-    if (err) {
-      return this.emit('error', err);
-    }
+  this.prompt(prompts, function (props) {
 
     this.libname      = props.libname.replace(/\s+/g, '');
     this.includeTests = props.includeTests;
 
     cb();
   }.bind(this));
+
 };
 
 MicrolibGenerator.prototype.app = function app() {
