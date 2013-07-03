@@ -57,6 +57,10 @@ enjoy.
 
 ## Changelog
 
+### 0.1.5
+
+* Library example is now browser & amd compatible by default.
+
 ### 0.1.4
 
 * Templating out library name

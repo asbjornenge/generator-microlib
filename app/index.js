@@ -106,7 +106,6 @@ MicrolibGenerator.prototype.app = function app() {
       this.mkdir('tests');
       this.template('intern.js',      'tests/intern.js');
       this.template('intern_test.js', 'tests/test.js');
-      this.template('library_amd.js', 'lib/'+this.libname+'_amd.js');
       this.devDepsNpm  +=
         ',\n    "intern" : "~1.1.0"';
       this.gruntTestsConfig =
