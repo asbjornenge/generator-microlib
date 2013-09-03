@@ -28,13 +28,13 @@ MicrolibGenerator.prototype.askFor = function askFor() {
   var prompts = [
     {
       name : 'libname',
-      message : 'What is the name of your library?'.bold.green,
+      message : 'What is the name of your library?',
       default : dirname,
       warning : 'a warning'
     },
     {
       name: 'includeTests',
-      message: 'What is your flavor in testing tools?'.bold.green,
+      message: 'What is your flavor in testing tools?',
       type : 'list',
       choices : [
         { name : 'QUnit',      value : 'qunit' },
