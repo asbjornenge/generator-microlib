@@ -58,6 +58,10 @@ enjoy.
 
 ## Changelog
 
+### 0.2.1
+
+* A few fixes to support latest yeoman-generator & yo
+
 ### 0.2.0
 
 * Updated yeoman-generator dependency to leverage [Inquirer](https://github.com/SBoudrias/Inquirer.js) for list prompts
