@@ -19,23 +19,11 @@ util.inherits(MicrolibGenerator, yeoman.generators.NamedBase);
 MicrolibGenerator.prototype.askFor = function askFor() {
   var cb = this.async();
 
-  // welcome message
-  var welcome =
-  '\n     _-----_' +
-  '\n    |       |' +
-  '\n    |' + '--(µ)--'.red + '|   .---------------------------------------------.' +
-  '\n   `---------´  |    ' + 'Welcome to Yeoman ladies and gentlemen,'.yellow.bold+'  |' +
-  '\n    ' + '( '.yellow + '_' + '´U`'.yellow + '_' + ' )'.yellow + '   |   ' + 'lets make a library! Ooh, that tickles. '.yellow.bold + '  |' +
-  '\n    /___A___\\   \'_____________________________________________\'' +
-  '\n     |  ~  |'.yellow +
-  '\n   __' + '\'.___.\''.yellow + '__' +
-  '\n ´   ' + '`  |'.red + '° ' + '´ Y'.red + ' `\n';
-
   // dirname
   var splitPath = process.cwd().split('/');
   var dirname   = splitPath[splitPath.length-1];
 
-  console.log(welcome);
+  console.log(this.yeoman);
 
   var prompts = [
     {
