@@ -34,7 +34,7 @@ describe('microlib generator', function () {
 
     helpers.mockPrompt(this.app, {
       'libname'     : 'yolo',
-      'includeTests': 'intern'
+      'includeTests': 'mocha'
     });
     this.app.options['skip-install'] = true;
     this.app.run({}, function () {

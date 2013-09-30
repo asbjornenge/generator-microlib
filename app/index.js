@@ -37,7 +37,8 @@ MicrolibGenerator.prototype.askFor = function askFor() {
       message: 'What is your flavor in testing tools?',
       type : 'list',
       choices : [
-        { name : 'QUnit',      value : 'qunit' },
+        { name : 'Mocha',      value : 'mocha'  },
+        { name : 'QUnit',      value : 'qunit'  },
         { name : 'The Intern', value : 'intern' }
       ],
       default : 'intern'
@@ -66,7 +67,7 @@ MicrolibGenerator.prototype.app = function app() {
   this.gruntTestTasks    = "";
   this.gruntTestTaskName = "";
   this.devDepsBower      = "";
-  this.devDepsNpm       =
+  this.devDepsNpm        =
     '"grunt": "~0.4.1",'+
     '\n    "grunt-contrib-jshint" : "~0.6.0",'+
     '\n    "grunt-contrib-uglify" : "~0.2.2",'+
@@ -74,40 +75,53 @@ MicrolibGenerator.prototype.app = function app() {
     '\n    "grunt-contrib-watch"  : "~0.4.4",'+
     '\n    "matchdep"             : "~0.1.2"';
 
+  this.mkdir('test');
   switch(this.includeTests) {
     case 'qunit':
-      this.mkdir('tests');
-      this.template('qunit.html',    'tests/test.html');
-      this.template('qunit_test.js', 'tests/test.js');
+      this.template('qunit.html',    'test/test.html');
+      this.template('qunit_test.js', 'test/spec.js');
       this.devDepsNpm  +=
-        ',\n    "grunt-contrib-qunit"    : "~0.2.2"';
+        ',\n    "grunt-contrib-qunit"    : "~0.3.0"';
       this.devDepsBower =
-        '"qunit": "~1.11.0"'
+        '"qunit": "~1.12.0"'
       this.gruntTestsConfig =
         "qunit: {"+
-        "\n        files: ['tests/test.html']"+
+        "\n        all: ['test/test.html']"+
         "\n    },";
       this.gruntTestTaskName = "qunit";
       break;
-    default:
-      this.mkdir('tests');
-      this.template('intern.js',      'tests/intern.js');
-      this.template('intern_test.js', 'tests/test.js');
+    case 'intern':
+      this.template('intern.js',      'test/intern.js');
+      this.template('intern_test.js', 'test/spec.js');
       this.devDepsNpm  +=
-        ',\n    "intern" : "~1.1.0"';
+        ',\n    "intern" : "~1.2.1"';
       this.gruntTestsConfig =
         "intern: {"+
         "\n      library: {"+
         "\n        options: {"+
         "\n          // for other available options, see:"+
         "\n          // https://github.com/theintern/intern/wiki/Using-Intern-with-Grunt#task-options"+
-        "\n          config: 'tests/intern'"+
+        "\n          config: 'test/intern'"+
         "\n        }"+
         "\n      }"+
         "\n    },"
       this.gruntTestTasks = "grunt.loadNpmTasks('intern');";
       this.gruntTestTaskName = "intern";
       break;
+    default:
+      this.template('mocha_test.js',  'test/spec.js');
+      this.devDepsNpm  +=
+        ',\n    "grunt-mocha-test" : "~0.7.0"';
+      this.gruntTestsConfig =
+        "mochaTest: {"+
+        "\n      test: {"+
+        "\n        options: {"+
+        "\n          reporter: 'nyan'"+
+        "\n        },"+
+        "\n        src: ['test/*.js']"+
+        "\n      }"+
+        "\n    },";
+      this.gruntTestTaskName = "mochaTest";
   }
 
   this.template('Gruntfile.js',  'Gruntfile.js');
