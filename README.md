@@ -58,6 +58,20 @@ enjoy.
 
 ## Changelog
 
+### 0.2.2
+
+* Added mocha support (grunt-mocha-test)
+* Added .bowerrc
+* Updated qunit & intern packages
+* Renamed tests folder & test.js file
+	* ./tests -> ./test 
+	* test.js -> spec.js
+
+#### Notes
+
+QUnit now expects an up-to-date bower version. Or rather; QUnit's *test/test.html* references qunit from a *bower_components* dir in project root. The included .bowerrc should automatically fix this.
+
+
 ### 0.2.1
 
 * A few fixes to support latest yeoman-generator & yo
