@@ -102,3 +102,7 @@ QUnit now expects an up-to-date bower version. Or rather; QUnit's *test/test.htm
 ### Pre 0.1.4
 
 Had no changelog, can't remember. Stuff happened.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/asbjornenge/generator-microlib/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
